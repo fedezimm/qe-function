@@ -1,15 +1,13 @@
 {
-  "scriptFile": "__init__.py",
+  "scriptFile": "handle.py",
   "bindings": [
     {
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": [
-        "get",
-        "post"
-      ]
+      "route":"api-qe/terms",
+      "methods": ["get"]
     },
     {
       "type": "http",
