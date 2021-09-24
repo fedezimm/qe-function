@@ -3,3 +3,6 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
+wikipedia==1.4.0
+gensim==3.6.0
+nltk==3.2.5
