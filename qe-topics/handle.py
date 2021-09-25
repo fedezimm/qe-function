@@ -1,26 +1,30 @@
 import logging
-
+import json
 import azure.functions as func
 from model.qe_topics.query import Query
+from application.qe_topics.query_mapper import QueryMapper
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('Python HTTP trigger function processed a request.') 
 
-    query = req.params.get('query')
-    if not query:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    query = None
+    try:
+        req_body = req.get_json()
+    except ValueError:
+        pass
+    else:
+        query = req_body.get('query')
 
     if query:
         query = Query(query)
-        term = query.terms
-        return func.HttpResponse('{"terms_identified":['+ term[0]+',' + term[1]+']}')
+
+        #get the terms
+        return QueryMapper.to_definition(query)
+
+
+        #return func.HttpResponse('{"terms_identified":['+ term[0]+',' + term[1]+']}')
     else:
         return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
+             "You should provide a query in order to get the topics!",
+             status_code=400
         )

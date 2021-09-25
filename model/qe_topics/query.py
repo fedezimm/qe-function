@@ -42,9 +42,12 @@ class Query(object):
         query
     ):
         self.value = query
-        self.terms = self.get_terms(query)
+        self.terms = self.find_terms(query)
     
-    def get_terms(self, query):
+    def get_terms(self):
+        return self.terms
+    
+    def find_terms(self, query):
         nltk_pos_tagged = pos_tag(query.split())
         chunk_tree = ntc.parse(nltk_pos_tagged)
         
