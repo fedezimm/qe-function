@@ -7,13 +7,14 @@ from gensim.corpora import Dictionary
 from gensim.models import LdaModel
 
 def donwload_dependencies():
-  pass
-  # nltk.download('averaged_perceptron_tagger')
-  # #nltk.download('wordnet')
-  # nltk.download('stopwords')
-  # conll2000 = nltk.download('conll2000')
+  
+  nltk.download('averaged_perceptron_tagger')
+  nltk.download('wordnet')
+  nltk.download('stopwords')
+  conll2000 = nltk.download('conll2000')
 
 language = 'english'
+nltk.download('stopwords')
 en_stop = set(nltk.corpus.stopwords.words(language))
 
 def clean_text(lista):
