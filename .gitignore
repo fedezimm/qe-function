@@ -130,4 +130,4 @@ local.settings.json
 .python_packages
 
 #VS Code
-/.vscode/
+.vscode/*
