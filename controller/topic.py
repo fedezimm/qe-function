@@ -10,7 +10,7 @@ def getTopic(term):
       'keys': [{
         'word': topic[1][index][0], #character
         'value': str(topic[1][index][1]), #0.001
-        'ds_term': desambiguation_terms[index] #character (novel)
+        'ds_term': desambiguation_terms[index] #character (film)
       } for index in range(len(topic[1]))]
     } for topic in topics]
   }
@@ -21,3 +21,7 @@ def getTopic(term):
   #['batman','superman']
   #[(world,092,world), (character,097,[character(novel), character(film)]), new york, guason), (character, pelirroja, azul, rojo)]
   #[0]
+
+  #character
+
+  # character (novel)

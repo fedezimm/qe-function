@@ -108,4 +108,4 @@ def get_model(bag_corpus, id2word, num_topics, alpha = 'auto', eta='auto'):
       passes=passes,
       random_state=3)
   
-  return model, id2word
+  return model
