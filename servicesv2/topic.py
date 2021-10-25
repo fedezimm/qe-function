@@ -4,9 +4,13 @@ from servicesv2.model import prepare_data_model, get_model
 
 def getTopicsFromModel(term):
   corpus, id2word, _, n_topics, _ = prepare_data_model('', [term])
+  print('----------------------------------------------------------paso prepare_data_model terminado----------------------------------------------------------')
   model = get_model(corpus, id2word, n_topics)
+  print('----------------------------------------------------------paso model terminado----------------------------------------------------------')
   topic = model.show_topics(num_words=50, formatted=False)
+  print('----------------------------------------------------------paso topic terminado----------------------------------------------------------')
   desambiguation_terms = getDesambiguationTerms(topic,model,id2word)
+  print('----------------------------------------------------------paso disambiguation_terms terminado----------------------------------------------------------')
   return topic, desambiguation_terms
 
 def getDesambiguationTerms(topic, model, id2word):
@@ -17,12 +21,15 @@ def getDesambiguationTerms(topic, model, id2word):
     # Store None value in variable X --
     #print(term)
     desambiguation_term = term[0]
+    print("term: "+ desambiguation_term)
     try:
       WikipediaPage(desambiguation_term).content
+      print("ejecucion correcta con el termino " + desambiguation_term)
     # If there is a DesambiguationError (except) --
     except PageError:
-      print('PageError')
+      print('PageError para el termino '+ desambiguation_term)
     except DisambiguationError as err:
+      print("DisambiguationError para el termino " + desambiguation_term)
       value = 0
       best_word = term[0]
       # Iterate throw each DesambiguationOption and extract from each the word in parenthesis--

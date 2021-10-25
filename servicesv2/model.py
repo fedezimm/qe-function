@@ -13,9 +13,9 @@ def donwload_dependencies():
   nltk.download('stopwords')
   conll2000 = nltk.download('conll2000')
 
-language = 'english'
-nltk.download('stopwords')
-en_stop = set(nltk.corpus.stopwords.words(language))
+#language = 'english'
+#nltk.download('stopwords')
+#en_stop = set(nltk.corpus.stopwords.words(language))
 
 def clean_text(lista):
   output = []
@@ -35,6 +35,9 @@ def add_n_grams(corpus, min_count=3):
   return corpus
 
 def prepare_data_model(query, extra_terms = []):
+  language = 'english'
+  nltk.download('stopwords')
+  en_stop = set(nltk.corpus.stopwords.words(language))
   clean_key = extra_terms
   # Paso 3.1
   # retrieve wikipedia pages
@@ -86,6 +89,7 @@ def prepare_data_model(query, extra_terms = []):
   #Check the number of unique tokens and the number of documents
   #temp = dictionary[0]  # This is only to "load" the dictionary.
   #id2word = dictionary.id2token
+  print('prepare_data_model_terminadoooooo')
   return bag_corpus, id2word, corpus, busq_efect, clean_key
 
 def get_model(bag_corpus, id2word, num_topics, alpha = 'auto', eta='auto'):  
@@ -107,5 +111,5 @@ def get_model(bag_corpus, id2word, num_topics, alpha = 'auto', eta='auto'):
       num_topics=num_topics,
       passes=passes,
       random_state=3)
-  
+  print("get_model terminadoooooo")
   return model

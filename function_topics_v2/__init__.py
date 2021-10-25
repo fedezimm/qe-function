@@ -1,6 +1,6 @@
 import logging
 import azure.functions as func
-from controller.topic import getTopic
+from controllerv2.topic import getTopic
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
   logging.info('POST /topics')
