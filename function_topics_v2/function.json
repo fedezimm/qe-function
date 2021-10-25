@@ -1,12 +1,12 @@
 {
-  "scriptFile": "handle.py",
+  "scriptFile": "__init__.py",
   "bindings": [
     {
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route":"api-qe/terms",
+      "route": "v2/topics",
       "methods": ["post"]
     },
     {
