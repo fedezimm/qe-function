@@ -3,6 +3,7 @@ from wikipedia.exceptions import DisambiguationError,PageError
 from servicesv2.model import prepare_data_model, get_model
 
 def getTopicsFromModel(term):
+  print(term)
   corpus, id2word, _, n_topics, _ = prepare_data_model('', [term])
   print('----------------------------------------------------------paso prepare_data_model terminado----------------------------------------------------------')
   model = get_model(corpus, id2word, n_topics)
@@ -21,6 +22,7 @@ def getDesambiguationTerms(topic, model, id2word):
     # Store None value in variable X --
     #print(term)
     desambiguation_term = term[0]
+    best_word = term[0]
     print("term: "+ desambiguation_term)
     try:
       WikipediaPage(desambiguation_term).content
@@ -35,7 +37,7 @@ def getDesambiguationTerms(topic, model, id2word):
       # Iterate throw each DesambiguationOption and extract from each the word in parenthesis--
       print('Por entrar')
       for option in err.options:
-        print('Entra al for')
+        print(f'Alternativa: {str(option)}')
         index_start = option.find('(') + 1
         index_final = option.find(')')
         if index_start != -1 and index_final != -1:
@@ -56,4 +58,7 @@ def getDesambiguationTerms(topic, model, id2word):
       desambiguation_term = best_word
     # Append variable X in the list (else)
     desambiguation_terms.append(desambiguation_term)
+    print(f'Desambiguacion: {str(term[0])} -> {str(best_word)}')
+    if term[0] == best_word:
+      raise Exception(f'Error en desambiguacion {str(term[0])} -> {str(best_word)}')
   return desambiguation_terms
