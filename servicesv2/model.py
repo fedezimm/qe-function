@@ -45,9 +45,10 @@ def prepare_data_model(query, extra_terms = []):
   corpus = []
   for k in clean_key:     
       try:
-          retrieve_doc = wikipedia.WikipediaPage(k).content #Retrieval information from Wikipedia of the first term
+          retrieve_doc = wikipedia.page(k).content
+          #print(retrieve_doc)
           if not retrieve_doc:
-            retrieve_doc = wikipedia.page(k).content
+            retrieve_doc = wikipedia.WikipediaPage(k).content #Retrieval information from Wikipedia of the first term
           retrieve_doc = retrieve_doc.replace("=", "") #Clean the document
           retrieve_doc = retrieve_doc.replace("\n\n\n","") #Clean the document
           retrieve_doc = retrieve_doc.split("\n") #Split the retrieve extense doc in a list smaller docs (differents paragraphs)
