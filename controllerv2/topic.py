@@ -2,7 +2,7 @@ from servicesv2.topic import getTopicsFromModel
 import json
 
 def getTopic(term):
-  topics, desambiguation_terms = getTopicsFromModel(term)
+  topics, desambiguation_terms, expand = getTopicsFromModel(term)
   response = {
     'key': [term],
     'topics': [{
@@ -10,6 +10,7 @@ def getTopic(term):
       'keys': [{
         'word': topic[1][index][0], #character
         'value': str(topic[1][index][1]), #0.001
+        'expand': expand[index], #True, False (True si se deberia seguir expandiendo, False si no)
         'ds_term': desambiguation_terms[index] #character (film)
       } for index in range(len(topic[1]))]
     } for topic in topics]

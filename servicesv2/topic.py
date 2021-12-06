@@ -10,13 +10,14 @@ def getTopicsFromModel(term):
   print('----------------------------------------------------------paso model terminado----------------------------------------------------------')
   topic = model.show_topics(num_words=50, formatted=False)
   print('----------------------------------------------------------paso topic terminado----------------------------------------------------------')
-  desambiguation_terms = getDesambiguationTerms(topic,model,id2word)
+  desambiguation_terms, expand = getDesambiguationTerms(topic,model,id2word)
   print('----------------------------------------------------------paso disambiguation_terms terminado----------------------------------------------------------')
-  return topic, desambiguation_terms
+  return topic, desambiguation_terms, expand
 
 def getDesambiguationTerms(topic, model, id2word):
   # Initialize a list--
   desambiguation_terms = []
+  expand = []
   # For each term in topic: --
   for term in topic[0][1]:
     # Store None value in variable X --
@@ -26,16 +27,18 @@ def getDesambiguationTerms(topic, model, id2word):
     try:
       WikipediaPage(desambiguation_term).content
       print("ejecucion correcta con el termino " + desambiguation_term)
+      expand.append(True)
     # If there is a DesambiguationError (except) --
     except PageError:
       print('PageError para el termino '+ desambiguation_term)
+      expand.append(False)
     except DisambiguationError as err:
       print("DisambiguationError para el termino " + desambiguation_term)
       value = 0
       best_word = term[0]
       # Iterate throw each DesambiguationOption and extract from each the word in parenthesis--
       for option in err.options:
-        print(f'Alternativa: {str(option)}', end=" ")
+        #print(f'Alternativa: {str(option)}', end=" ")
         clean_term = get_clean_term(option)
         word_id = id2word.token2id.get(clean_term)
         if word_id is not None:
@@ -52,9 +55,13 @@ def getDesambiguationTerms(topic, model, id2word):
       print(f'Desambiguacion: {str(term[0])} -> {str(best_word)}')  
       # Store the best desambiguation term in variable X
       desambiguation_term = best_word
+      if desambiguation_term.lower() == term[0].lower():
+        expand.append(False)
+      else:
+        expand.append(True)
     # Append variable X in the list (else)
     desambiguation_terms.append(desambiguation_term)
-  return desambiguation_terms
+  return desambiguation_terms, expand
 
 def get_clean_term(term):
   clean_term = term
